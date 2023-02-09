@@ -2,8 +2,13 @@ import React from 'react'
 
 import styled from "styled-components";
 import {MdDeleteForever} from "react-icons/all.js";
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+import { removeUser } from '../store/slices/UserSlices';
 const DisplayUsers = () => {
+    const dispatch = useDispatch();
+    const deleteUser = (id) => {
+    dispatch(removeUser(id));
+    }
 
     const data = useSelector((state) => {
         return state.users;
@@ -15,6 +20,10 @@ const DisplayUsers = () => {
         data.map((user,id) =>{
             return <li key={id}>
                 {user}
+                <button className='btn-delete' onClick={()=> deleteUser(id)}>
+                    <MdDeleteForever className='delete-icon'/>
+
+                </button>
             </li>
         })
     }
